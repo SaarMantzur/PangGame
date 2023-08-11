@@ -1,7 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.Events;
+using System.Reflection;
+using System.Collections.Generic;
+using System.Linq;
 
 /// <summary>
 /// This class contains all the events relevent to this application.
@@ -10,16 +10,14 @@ using UnityEngine.Events;
 /// </summary>
 public static class EventsManager
 {
-    public static UnityEvent StartGameEvent;
+    public static UnityEvent StartGameEvent = new UnityEvent();
 
-    public static UnityEvent EndGameEvent;
+    public static UnityEvent EndGameEvent = new UnityEvent();
 
-    public static UnityEvent ShowGameMenuEvent;
+    public static UnityEvent ShowGameMenuEvent = new UnityEvent();
 
-    public static void InitializeAllEvents()
-    {
-        StartGameEvent = new UnityEvent();
-        EndGameEvent = new UnityEvent();
-        ShowGameMenuEvent = new UnityEvent();
-    }
+
+
+    public static UnityEvent MoveRightEvent = new UnityEvent();
+    public static UnityEvent MoveLeftEvent = new UnityEvent();
 }

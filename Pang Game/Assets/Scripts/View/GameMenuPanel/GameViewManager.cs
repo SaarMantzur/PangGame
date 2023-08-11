@@ -4,17 +4,14 @@ using UnityEngine.UI;
 public class GameViewManager : MonoBehaviour
 {
     //The Canvas of the scene
-    [SerializeField] private Canvas GameCanvas;
+    [SerializeField] private Canvas _gameCanvas;
 
     //The prefab of the game menu GameObject
-    [SerializeField] private GameObject GameMenu;
-    
+    [SerializeField] private GameObject _gameMenu;
 
 
     private void Awake()
     {
-        EventsManager.InitializeAllEvents();
-
         InitializeGameMenu();
     }
 
@@ -26,10 +23,10 @@ public class GameViewManager : MonoBehaviour
     /// </summary>
     private void InitializeGameMenu()
     {
-        if (GameMenu != null && GameCanvas != null)
+        if (_gameMenu != null && _gameCanvas != null)
         {
-            GameMenu = Instantiate(GameMenu);
-            RectTransform menuRectTransform = GameMenu.GetComponent<RectTransform>();
+            _gameMenu = Instantiate(_gameMenu);
+            RectTransform menuRectTransform = _gameMenu.GetComponent<RectTransform>();
             InitializeGameMenuByRectTransform(menuRectTransform);
         }
     }
@@ -41,7 +38,7 @@ public class GameViewManager : MonoBehaviour
     /// <param name="rectTransform">The RectTransform Componnent of the menu</param>
     private void InitializeGameMenuByRectTransform(RectTransform rectTransform)
     {
-        rectTransform.SetParent(GameCanvas.transform);
+        rectTransform.SetParent(_gameCanvas.transform);
         rectTransform.offsetMax = new Vector2(0, 0);
         rectTransform.offsetMin = new Vector2(0, 0);
     }
