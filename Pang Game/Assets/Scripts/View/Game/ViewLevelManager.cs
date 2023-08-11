@@ -14,25 +14,64 @@ public class ViewLevelManager : MonoBehaviour
     {
         _canvas.renderMode = RenderMode.ScreenSpaceCamera;
         _canvas.worldCamera = Camera.main;
+
+        //Used to avoid balls from coliding with each other.
+        //The layer of _originalBallView is defualtly set to 3 => GameData.BallsLayer.
+        int ballsLayer = GameData.BallsLayer;
+        Physics2D.IgnoreLayerCollision(ballsLayer, ballsLayer);
+
+        EventsManager.SplitEvent.AddListener(Split);
     }
 
-    public void CreateLevelByNumber(int levelNumber)
+    private void Split(BallView ballView)
+    {
+        if (ballView.GetSize() > 1)
+        {
+            DataStructures.BallData leftBallData = new DataStructures.BallData();
+            leftBallData.BallColor = ballView.GetColor();
+            leftBallData.BallDirection = -1;
+            leftBallData.BallSize = ballView.GetSize() - 1;
+            leftBallData.BallLocation = ballView.transform.localPosition;
+            CreateNewBall(leftBallData);
+
+            DataStructures.BallData rightBallData = new DataStructures.BallData();
+            rightBallData.BallColor = ballView.GetColor();
+            rightBallData.BallDirection = 1;
+            rightBallData.BallSize = ballView.GetSize() - 1;
+            rightBallData.BallLocation = ballView.transform.localPosition;
+
+            CreateNewBall(rightBallData);
+        }
+
+        _createdBallView.Remove(ballView);
+        Destroy(ballView.gameObject);
+
+        if(_createdBallView.Count == 0)
+            EventsManager.FinishLevelEvent.Invoke();
+
+
+    }
+
+    public void CreateCurrentLevel()
     {
         //Ask for Level Data by number
         DataStructures.BallData ballData = new DataStructures.BallData();
         ballData.BallColor = Color.blue;
         ballData.BallLocation = new Vector2(3, 3);
         ballData.BallSize = 6;
+        ballData.BallDirection = 1;
 
         DataStructures.BallData ballData1 = new DataStructures.BallData();
         ballData1.BallColor = Color.red;
-        ballData1.BallLocation = new Vector2(-1, 3);
+        ballData1.BallLocation = new Vector2(-1, 2);
         ballData1.BallSize = 5;
+        ballData1.BallDirection = 1;
 
         DataStructures.BallData ballData2 = new DataStructures.BallData();
-        ballData2.BallColor = Color.red;
-        ballData2.BallLocation = new Vector2(-4, 3);
+        ballData2.BallColor = Color.green;
+        ballData2.BallLocation = new Vector2(-4, 2);
         ballData2.BallSize = 4;
+        ballData2.BallDirection = -1;
 
         DataStructures.LevelInstructions levelInstructions = new DataStructures.LevelInstructions();
 
@@ -48,13 +87,20 @@ public class ViewLevelManager : MonoBehaviour
     {
         foreach (var ballData in levelInstructions.ballsData)
         {
-            BallView ballView = Instantiate(_originalBallView);
-            if(ballView != null)
-            {
-                ballView.SetColor(ballData.BallColor);
-                ballView.SetSize(ballData.BallSize);
-                ballView.transform.localPosition = ballData.BallLocation;
-            }
+            CreateNewBall(ballData);
+        }
+    }
+
+    private void CreateNewBall(DataStructures.BallData ballData)
+    {
+        BallView ballView = Instantiate(_originalBallView);
+        if (ballView != null)
+        {
+            ballView.SetDirection(ballData.BallDirection);
+            ballView.SetColor(ballData.BallColor);
+            ballView.SetSize(ballData.BallSize);
+            ballView.transform.localPosition = ballData.BallLocation;
+            _createdBallView.Add(ballView);
         }
     }
 }

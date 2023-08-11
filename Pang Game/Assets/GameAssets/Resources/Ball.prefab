@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7012524061824624376}
   - component: {fileID: 7012524061824624381}
   - component: {fileID: 5752124608648224645}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Ball
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -137,3 +137,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 7012524061824624383}
+  rigidbody2: {fileID: 7012524061824624376}

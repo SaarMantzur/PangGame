@@ -28,7 +28,7 @@ public class GameViewManager : MonoBehaviour
             _viewLevelManager = Instantiate(_viewLevelManager);
             isLevelInstantiated = true;
         }
-        _viewLevelManager.CreateLevelByNumber(1);
+        _viewLevelManager.CreateCurrentLevel();
 
     }
 

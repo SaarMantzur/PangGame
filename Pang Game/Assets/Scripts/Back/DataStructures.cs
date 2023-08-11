@@ -20,6 +20,9 @@ public class DataStructures
 
         //The Color in which the ball shall apear.
         public Color BallColor;
+
+        //The directopn in which the ball shall move first. (-1 for left and 1 for right)
+        public int BallDirection;
     }
 
 }

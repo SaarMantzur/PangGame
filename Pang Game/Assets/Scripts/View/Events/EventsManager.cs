@@ -16,8 +16,12 @@ public static class EventsManager
 
     public static UnityEvent ShowGameMenuEvent = new UnityEvent();
 
+    public static UnityEvent FinishLevelEvent = new UnityEvent();
 
 
     public static UnityEvent MoveRightEvent = new UnityEvent();
     public static UnityEvent MoveLeftEvent = new UnityEvent();
+
+    public static UnityEvent<BallView> SplitEvent = new UnityEvent<BallView>();
+
 }
