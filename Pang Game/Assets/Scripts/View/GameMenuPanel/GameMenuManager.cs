@@ -19,7 +19,6 @@ public class GameMenuManager : MonoBehaviour
     //The prefab of the game menu GameObject
     [SerializeField] private GameObject ButtonsPanel;
 
-    [SerializeField] private ViewLevelManager _viewLevelManager;
 
     //check if GameMenu is visible or not, to avoid unnecassery calls.
     private bool IsVisible = true;

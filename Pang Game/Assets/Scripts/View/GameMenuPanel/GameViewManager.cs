@@ -9,12 +9,28 @@ public class GameViewManager : MonoBehaviour
     //The prefab of the game menu GameObject
     [SerializeField] private GameObject _gameMenu;
 
+    //The Level view parts
+    [SerializeField] private ViewLevelManager _viewLevelManager;
+
+    private bool isLevelInstantiated = false;
 
     private void Awake()
     {
         InitializeGameMenu();
+        EventsManager.StartGameEvent.AddListener(InitializeGameLevel);
     }
 
+    private void InitializeGameLevel()
+    {
+        //Make sure the ViewLevelManager is only instantiated once to the scene.
+        if(!isLevelInstantiated)
+        {
+            _viewLevelManager = Instantiate(_viewLevelManager);
+            isLevelInstantiated = true;
+        }
+        _viewLevelManager.CreateLevelByNumber(1);
+
+    }
 
     /// <summary>
     /// Choosing to initialize the menu this way (instead of defualtly leave 
