@@ -17,18 +17,19 @@ public class GameViewManager : MonoBehaviour
     private void Awake()
     {
         InitializeGameMenu();
-        EventsManager.StartGameEvent.AddListener(InitializeGameLevel);
+        EventsManager.StartNewLevelEvent.AddListener(InitializeGameLevel);
     }
 
-    private void InitializeGameLevel()
+    private void InitializeGameLevel(DataStructures.LevelInstructions levelInstructions)
     {
+        print("Hit GameLevel");
         //Make sure the ViewLevelManager is only instantiated once to the scene.
         if(!isLevelInstantiated)
         {
             _viewLevelManager = Instantiate(_viewLevelManager);
             isLevelInstantiated = true;
         }
-        _viewLevelManager.CreateCurrentLevel();
+        _viewLevelManager.CreateLevelByLevelData(levelInstructions);
 
     }
 

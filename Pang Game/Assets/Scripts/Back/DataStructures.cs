@@ -10,7 +10,12 @@ public class DataStructures
         public List<BallData> ballsData = new List<BallData>();
     }
 
-    public class BallData
+    public class ItemData
+    {
+
+    }
+
+    public class BallData : ItemData
     {
         //The number representing the ball size (Only powers of 2)
         public int BallSize;

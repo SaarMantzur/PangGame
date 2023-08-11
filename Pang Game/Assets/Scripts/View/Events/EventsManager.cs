@@ -10,7 +10,6 @@ using System.Linq;
 /// </summary>
 public static class EventsManager
 {
-    public static UnityEvent StartGameEvent = new UnityEvent();
 
     public static UnityEvent EndGameEvent = new UnityEvent();
 
@@ -23,5 +22,10 @@ public static class EventsManager
     public static UnityEvent MoveLeftEvent = new UnityEvent();
 
     public static UnityEvent<BallView> SplitEvent = new UnityEvent<BallView>();
+
+    public static UnityEvent<int> StartGameEvent = new UnityEvent<int>();
+    public static UnityEvent<DataStructures.LevelInstructions> StartNewLevelEvent = new UnityEvent<DataStructures.LevelInstructions>();
+
+    //public static UnityEvent<DataStructures.LevelInstructions> Levels
 
 }

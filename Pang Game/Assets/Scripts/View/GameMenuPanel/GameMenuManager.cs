@@ -29,9 +29,13 @@ public class GameMenuManager : MonoBehaviour
         QuitGameButton.onClick.AddListener(Application.Quit);
 
         //Attach StartGame button to its purpose.
-        StartGameButton.onClick.AddListener(EventsManager.StartGameEvent.Invoke);
+        StartGameButton.onClick.AddListener(() =>
+        {
+            print("Button clicked");
+            EventsManager.StartGameEvent.Invoke(0);
+        });
 
-        EventsManager.StartGameEvent.AddListener(() => HideShowMenuEvent(false));
+        EventsManager.StartGameEvent.AddListener((i) => HideShowMenuEvent(false));
         EventsManager.ShowGameMenuEvent.AddListener(() => HideShowMenuEvent(true));
     }
 
