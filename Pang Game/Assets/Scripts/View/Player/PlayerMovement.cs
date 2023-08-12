@@ -6,8 +6,11 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
 
+
     [SerializeField] private Animator MovementAnimator;
     [SerializeField] private Rigidbody2D Rigidbody2D;
+
+    private float velocity = 2;
 
     private readonly string _moveRightCommand = "MoveRight";
     private readonly string _moveLeftCommand = "MoveLeft";
@@ -18,9 +21,11 @@ public class PlayerMovement : MonoBehaviour
     {
         EventsManager.MoveLeftEvent.AddListener(MoveLeft);
         EventsManager.MoveRightEvent.AddListener(MoveRight);
+        EventsManager.MoveIdleEvent.AddListener(Fire);
+        EventsManager.MoveIdleEvent.AddListener(CommitIdle);
     }
 
-    private void CommitIdle()
+    public void CommitIdle()
     {
         Rigidbody2D.velocity = new Vector2(0, 0);
         MovementAnimator.SetBool(_moveRightCommand, false);
@@ -28,21 +33,21 @@ public class PlayerMovement : MonoBehaviour
         MovementAnimator.SetBool(_fireCommand, false);
     }
 
-    private void MoveRight()
+    public void MoveRight()
     {
-        Rigidbody2D.velocity = new Vector2(1, 0);
+        Rigidbody2D.velocity = new Vector2(velocity, 0);
         MovementAnimator.SetBool(_moveRightCommand, true);
     }
 
-    private void MoveLeft()
+    public void MoveLeft()
     {
-        Rigidbody2D.velocity = new Vector2(-1, 0);
+        Rigidbody2D.velocity = new Vector2(-velocity, 0);
         MovementAnimator.SetBool(_moveLeftCommand, true);
     }
 
-    private void Fire()
+    public void Fire()
     {
-        Rigidbody2D.velocity = new Vector2(-1, 0);
+        Rigidbody2D.velocity = new Vector2(-velocity, 0);
         MovementAnimator.SetBool(_fireCommand, true);
     }
 

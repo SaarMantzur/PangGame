@@ -226,7 +226,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -406,8 +406,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _gameCanvas: {fileID: 1360308920}
   _gameMenu: {fileID: 2774464312210445287, guid: 1d57a4309d92e0440ad618ce620b9ad1, type: 3}
-  _viewLevelManager: {fileID: 3816474804357600285, guid: f9769ecef2f4699488c5be3aa3d38248, type: 3}
+  _viewLevelManager: {fileID: 2938878403571005938, guid: f9769ecef2f4699488c5be3aa3d38248, type: 3}
   _finishLevelScreen: {fileID: 8133705092441197099, guid: 2c5c81b0bf6f038489df2a64bdce19e5, type: 3}
+  _gameOverScreenManager: {fileID: 2440309483164931253, guid: 8bdd0513888612746b3deadbdfc33b73, type: 3}
 --- !u!4 &1800580540
 Transform:
   m_ObjectHideFlags: 0
