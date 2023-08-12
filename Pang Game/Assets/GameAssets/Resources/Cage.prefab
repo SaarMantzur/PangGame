@@ -830,3 +830,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _originalBallView: {fileID: 5752124608648224645, guid: 8126a38b0093d1e46a551b1a33ce8a74, type: 3}
   _canvas: {fileID: 3391491039458880006}
+  _player: {fileID: 3391491039687070542}

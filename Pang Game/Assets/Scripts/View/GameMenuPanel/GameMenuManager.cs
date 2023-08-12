@@ -31,7 +31,6 @@ public class GameMenuManager : MonoBehaviour
         //Attach StartGame button to its purpose.
         StartGameButton.onClick.AddListener(() =>
         {
-            print("Button clicked");
             EventsManager.StartGameEvent.Invoke(0);
         });
 

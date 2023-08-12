@@ -350,7 +350,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -368,7 +368,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -385,7 +385,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1800580540}
   - component: {fileID: 1800580539}
-  - component: {fileID: 1800580541}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -408,6 +407,7 @@ MonoBehaviour:
   _gameCanvas: {fileID: 1360308920}
   _gameMenu: {fileID: 2774464312210445287, guid: 1d57a4309d92e0440ad618ce620b9ad1, type: 3}
   _viewLevelManager: {fileID: 3816474804357600285, guid: f9769ecef2f4699488c5be3aa3d38248, type: 3}
+  _finishLevelScreen: {fileID: 8133705092441197099, guid: 2c5c81b0bf6f038489df2a64bdce19e5, type: 3}
 --- !u!4 &1800580540
 Transform:
   m_ObjectHideFlags: 0
@@ -421,17 +421,5 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1800580541
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1800580538}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 557b2c27804784e44b6d31914c6c93d9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

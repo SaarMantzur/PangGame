@@ -12,25 +12,60 @@ public class GameViewManager : MonoBehaviour
     //The Level view parts
     [SerializeField] private ViewLevelManager _viewLevelManager;
 
-    private bool isLevelInstantiated = false;
+    [SerializeField] private FinishLevelScreen _finishLevelScreen;
+
+    //The Core Game manager
+    private CoreGameFlow _coreGameFlow;
+
+    private bool _isLevelInstantiated = false;
+
+    private bool _isLevelScreenInstantiated = false;
 
     private void Awake()
     {
-        InitializeGameMenu();
         EventsManager.StartNewLevelEvent.AddListener(InitializeGameLevel);
+        EventsManager.FinishLevelEvent.AddListener(InitializeFinishLevelScreen);
+        InitializeGameMenu();
+        _coreGameFlow = new CoreGameFlow();
+    }
+
+    private void InitializeFinishLevelScreen()
+    {
+        //Make sure the _finishLevelScreen is only instantiated once to the scene.
+        if (!_isLevelScreenInstantiated)
+        {
+            _finishLevelScreen = Instantiate(_finishLevelScreen);
+            _isLevelScreenInstantiated = true;
+            _finishLevelScreen.gameObject.SetActive(true);
+
+            RectTransform rectTransform = _finishLevelScreen.GetComponent<RectTransform>();
+
+            rectTransform.SetParent(_gameCanvas.transform);
+            rectTransform.offsetMax = new Vector2(0, 0);
+            rectTransform.offsetMin = new Vector2(0, 0);
+
+        }
+        else
+        {
+            _finishLevelScreen.gameObject.SetActive(true);
+        }
+        _finishLevelScreen.SetData(_coreGameFlow.GetLevelNumber());
     }
 
     private void InitializeGameLevel(DataStructures.LevelInstructions levelInstructions)
     {
-        print("Hit GameLevel");
         //Make sure the ViewLevelManager is only instantiated once to the scene.
-        if(!isLevelInstantiated)
+        if(!_isLevelInstantiated)
         {
             _viewLevelManager = Instantiate(_viewLevelManager);
-            isLevelInstantiated = true;
+            _isLevelInstantiated = true;
         }
         _viewLevelManager.CreateLevelByLevelData(levelInstructions);
 
+        if(_finishLevelScreen.gameObject.activeSelf)
+        {
+            _finishLevelScreen.gameObject.SetActive(false);
+        }
     }
 
     /// <summary>

@@ -7,8 +7,10 @@ public class ViewLevelManager : MonoBehaviour
 
     [SerializeField] private BallView _originalBallView;
     [SerializeField] private Canvas _canvas;
+    [SerializeField] private PlayerMovement _player;
 
     private List<BallView> _createdBallView = new List<BallView>();
+
 
     private void Awake()
     {
@@ -21,6 +23,7 @@ public class ViewLevelManager : MonoBehaviour
         Physics2D.IgnoreLayerCollision(ballsLayer, ballsLayer);
 
         EventsManager.SplitEvent.AddListener(Split);
+        EventsManager.FinishLevelEvent.AddListener(ClearLevel);
     }
 
     private void Split(BallView ballView)
@@ -71,5 +74,18 @@ public class ViewLevelManager : MonoBehaviour
             ballView.transform.localPosition = ballData.BallLocation;
             _createdBallView.Add(ballView);
         }
+    }
+
+    private void ClearLevel()
+    {
+        if (_createdBallView.Count > 0)
+        {
+            foreach (BallView ballView in _createdBallView)
+            {
+                Destroy(ballView.gameObject);
+            }
+        }
+        _createdBallView.Clear();
+        _player.transform.localPosition = Vector2.zero;
     }
 }
