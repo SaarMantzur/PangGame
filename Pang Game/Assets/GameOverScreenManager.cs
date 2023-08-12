@@ -1,21 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class FinishLevelScreen : MonoBehaviour
+public class GameOverScreenManager : MonoBehaviour
 {
-    [SerializeField] private Button _nextLevelButton;
+    [SerializeField] private Button _restartLevelButton;
     [SerializeField] private Button _backToMenuButton;
-    [SerializeField] private TextMeshProUGUI _nextLevelText;
+
     private int _currentLevelNumber;
 
     private void Awake()
     {
-        if(_nextLevelButton != null)
+        if (_restartLevelButton != null)
         {
-            _nextLevelButton.onClick.AddListener(()=>EventsManager.StartGameEvent.Invoke(_currentLevelNumber+1));
+            _restartLevelButton.onClick.AddListener(() => EventsManager.StartGameOnDefaultLevelEvent.Invoke());
         }
 
         if (_backToMenuButton != null)
@@ -27,6 +26,6 @@ public class FinishLevelScreen : MonoBehaviour
     public void SetData(int currentLevelNumber)
     {
         _currentLevelNumber = currentLevelNumber;
-        _nextLevelText.text = "Ready For Level " + _currentLevelNumber+1 + "?";
     }
+
 }

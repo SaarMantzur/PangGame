@@ -19,6 +19,7 @@ public class GameMenuManager : MonoBehaviour
     //The prefab of the game menu GameObject
     [SerializeField] private GameObject ButtonsPanel;
 
+    private int _currentLevel;
 
     //check if GameMenu is visible or not, to avoid unnecassery calls.
     private bool IsVisible = true;
@@ -31,13 +32,17 @@ public class GameMenuManager : MonoBehaviour
         //Attach StartGame button to its purpose.
         StartGameButton.onClick.AddListener(() =>
         {
-            EventsManager.StartGameEvent.Invoke(0);
+            EventsManager.StartGameEvent.Invoke(_currentLevel);
         });
 
         EventsManager.StartGameEvent.AddListener((i) => HideShowMenuEvent(false));
         EventsManager.ShowGameMenuEvent.AddListener(() => HideShowMenuEvent(true));
     }
 
+    public void SetCurrentLevel(int currentLevel)
+    {
+        _currentLevel = currentLevel;
+    }
 
     /// <summary>
     /// Disables or enabels the GameMenu

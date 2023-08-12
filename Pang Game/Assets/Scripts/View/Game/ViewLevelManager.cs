@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ViewLevelManager : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class ViewLevelManager : MonoBehaviour
     [SerializeField] private BallView _originalBallView;
     [SerializeField] private Canvas _canvas;
     [SerializeField] private PlayerMovement _player;
+    [SerializeField] private RawImage _background;
 
     private List<BallView> _createdBallView = new List<BallView>();
 
@@ -61,6 +63,8 @@ public class ViewLevelManager : MonoBehaviour
         {
             CreateNewBall(ballData);
         }
+        if(levelInstructions.BackgroundImage != null)
+            _background.texture = levelInstructions.BackgroundImage;
     }
 
     private void CreateNewBall(DataStructures.BallData ballData)

@@ -22,7 +22,8 @@ public class CoreGameFlow
 
         EventsManager.StartGameEvent.AddListener((i) => 
         {
-            EventsManager.StartNewLevelEvent.Invoke(GameFlowLevelsList[i]);
+            if (i<GameFlowLevelsList.Count)
+                EventsManager.StartNewLevelEvent.Invoke(GameFlowLevelsList[i]);
         });
     }
 
@@ -51,6 +52,20 @@ public class CoreGameFlow
 
     private LevelInstructions CreateLevel1()
     {
+        BallData ballData1 = new BallData(1, new Vector2(-1, 2), Color.red, 0);
+
+        BallData ballData2 = new BallData(1, new Vector2(-2, 2), Color.cyan, 0);
+
+        LevelInstructions levelInstructions = new LevelInstructions();
+
+        levelInstructions.ballsData.Add(ballData1);
+        levelInstructions.ballsData.Add(ballData2);
+
+        return levelInstructions;
+    }
+
+    private LevelInstructions CreateLevel2()
+    {
         BallData ballData1 = new BallData(5, new Vector2(-1, 2),Color.red, 1);
 
         BallData ballData2 = new BallData(4, new Vector2(-4, 2), Color.green, -1);
@@ -63,7 +78,7 @@ public class CoreGameFlow
         return levelInstructions;
     }
 
-    private LevelInstructions CreateLevel2()
+    private LevelInstructions CreateLevel3()
     {
         BallData ballData = new BallData(6,new Vector2(3,3), Color.blue, 1);
 

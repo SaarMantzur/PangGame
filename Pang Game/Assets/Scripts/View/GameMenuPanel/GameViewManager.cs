@@ -14,8 +14,12 @@ public class GameViewManager : MonoBehaviour
 
     [SerializeField] private FinishLevelScreen _finishLevelScreen;
 
+    [SerializeField] private GameOverScreenManager _gameOverScreenManager;
+
     //The Core Game manager
     private CoreGameFlow _coreGameFlow;
+
+    private GameMenuManager _gameMenuManager;
 
     private bool _isLevelInstantiated = false;
 
@@ -25,8 +29,16 @@ public class GameViewManager : MonoBehaviour
     {
         EventsManager.StartNewLevelEvent.AddListener(InitializeGameLevel);
         EventsManager.FinishLevelEvent.AddListener(InitializeFinishLevelScreen);
+        EventsManager.ShowGameMenuEvent.AddListener(OnShowMenuEvent);
+        EventsManager.StartGameOnDefaultLevelEvent.AddListener(()=>EventsManager.StartGameEvent.Invoke(_coreGameFlow.GetLevelNumber()));
         InitializeGameMenu();
         _coreGameFlow = new CoreGameFlow();
+    }
+
+    private void OnShowMenuEvent()
+    {
+        _finishLevelScreen.gameObject.SetActive(false);
+        _gameMenuManager.SetCurrentLevel(_coreGameFlow.GetLevelNumber());
     }
 
     private void InitializeFinishLevelScreen()
@@ -37,6 +49,7 @@ public class GameViewManager : MonoBehaviour
             _finishLevelScreen = Instantiate(_finishLevelScreen);
             _isLevelScreenInstantiated = true;
             _finishLevelScreen.gameObject.SetActive(true);
+            _finishLevelScreen.SetData(_coreGameFlow.GetLevelNumber());
 
             RectTransform rectTransform = _finishLevelScreen.GetComponent<RectTransform>();
 
@@ -80,9 +93,9 @@ public class GameViewManager : MonoBehaviour
             _gameMenu = Instantiate(_gameMenu);
             RectTransform menuRectTransform = _gameMenu.GetComponent<RectTransform>();
             InitializeGameMenuByRectTransform(menuRectTransform);
+            _gameMenuManager = _gameMenu.GetComponent<GameMenuManager>();
         }
     }
-
 
     /// <summary>
     /// Initializes the game menu ny RectTransform componnent.
