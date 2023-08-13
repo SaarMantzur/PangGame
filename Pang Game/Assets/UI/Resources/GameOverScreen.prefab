@@ -18,7 +18,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5432197161477233281
 RectTransform:
   m_ObjectHideFlags: 0
@@ -90,6 +90,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ded7b097590fc314faabd072e99ad39a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _restartLevelButton: {fileID: 5004292099394988388}
+  _backToMenuButton: {fileID: 6829915029816420017}
 --- !u!1 &4202265254114108401
 GameObject:
   m_ObjectHideFlags: 0
@@ -102,7 +104,7 @@ GameObject:
   - component: {fileID: 4586048805287129433}
   - component: {fileID: 7647453138295151399}
   m_Layer: 5
-  m_Name: NextRoundText
+  m_Name: Text2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -553,7 +555,7 @@ GameObject:
   - component: {fileID: 1270847198368015236}
   - component: {fileID: 5004292099394988388}
   m_Layer: 5
-  m_Name: NextButton
+  m_Name: RestartButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

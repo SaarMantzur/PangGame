@@ -80,7 +80,7 @@ public class ViewLevelManager : MonoBehaviour
         }
     }
 
-    private void ClearLevel()
+    public void ClearLevel()
     {
         if (_createdBallView.Count > 0)
         {

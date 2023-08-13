@@ -23,6 +23,8 @@ public static class EventsManager
     public static UnityEvent MoveIdleEvent = new UnityEvent();
     public static UnityEvent FireEvent = new UnityEvent();
 
+    public static UnityEvent SpeereDestroyed = new UnityEvent();
+
     public static UnityEvent<BallView> SplitEvent = new UnityEvent<BallView>();
 
     public static UnityEvent StartGameOnDefaultLevelEvent = new UnityEvent();

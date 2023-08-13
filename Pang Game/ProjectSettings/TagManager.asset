@@ -8,14 +8,14 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - BallsLayer
+  - Balls
   - Water
   - UI
   - Walls
-  - 
-  - 
-  - 
-  - 
+  - Roof
+  - Speere
+  - Player
+  - Floor
   - 
   - 
   - 

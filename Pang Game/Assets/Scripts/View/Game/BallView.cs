@@ -72,7 +72,7 @@ public class BallView : MonoBehaviour
                 break;
 
             //ball hit Player
-            case 7:
+            case 9:
                 //kill player
                 EventsManager.EndGameEvent.Invoke();
                 break;
@@ -83,11 +83,5 @@ public class BallView : MonoBehaviour
                 EventsManager.SplitEvent.Invoke(this);
                 break;
         }
-    }
-
-
-    private void OnMouseDown()
-    {
-        EventsManager.SplitEvent.Invoke(this);   
     }
 }

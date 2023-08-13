@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -25,20 +26,53 @@ public class GameViewManager : MonoBehaviour
 
     private bool _isLevelScreenInstantiated = false;
 
+    private bool _isGameOverScreenInstatiated = false;
+
     private void Awake()
     {
         EventsManager.StartNewLevelEvent.AddListener(InitializeGameLevel);
         EventsManager.FinishLevelEvent.AddListener(InitializeFinishLevelScreen);
         EventsManager.ShowGameMenuEvent.AddListener(OnShowMenuEvent);
+        EventsManager.EndGameEvent.AddListener(OnGameOver);
         EventsManager.StartGameOnDefaultLevelEvent.AddListener(()=>EventsManager.StartGameEvent.Invoke(_coreGameFlow.GetLevelNumber()));
         InitializeGameMenu();
         _coreGameFlow = new CoreGameFlow();
     }
 
+    private void OnGameOver()
+    {
+        InitializeGameOverScreen();
+        _viewLevelManager.ClearLevel();
+    }
+
     private void OnShowMenuEvent()
     {
         _finishLevelScreen.gameObject.SetActive(false);
+        _gameOverScreenManager.gameObject.SetActive(false);
         _gameMenuManager.SetCurrentLevel(_coreGameFlow.GetLevelNumber());
+    }
+
+    private void InitializeGameOverScreen()
+    {
+        //Make sure the _finishLevelScreen is only instantiated once to the scene.
+        if (!_isGameOverScreenInstatiated)
+        {
+            _gameOverScreenManager = Instantiate(_gameOverScreenManager);
+            _isGameOverScreenInstatiated = true;
+            _gameOverScreenManager.gameObject.SetActive(true);
+
+            RectTransform rectTransform = _gameOverScreenManager.GetComponent<RectTransform>();
+
+            rectTransform.SetParent(_gameCanvas.transform);
+            rectTransform.offsetMax = new Vector2(0, 0);
+            rectTransform.offsetMin = new Vector2(0, 0);
+
+        }
+        else
+        {
+            _gameOverScreenManager.gameObject.SetActive(true);
+        }
+        _gameOverScreenManager.SetData(_coreGameFlow.GetLevelNumber());
     }
 
     private void InitializeFinishLevelScreen()
@@ -78,6 +112,12 @@ public class GameViewManager : MonoBehaviour
         if(_finishLevelScreen.gameObject.activeSelf)
         {
             _finishLevelScreen.gameObject.SetActive(false);
+        }
+
+
+        if (_gameOverScreenManager.gameObject.activeSelf)
+        {
+            _gameOverScreenManager.gameObject.SetActive(false);
         }
     }
 
