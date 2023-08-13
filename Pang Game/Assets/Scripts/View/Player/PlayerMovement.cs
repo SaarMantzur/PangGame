@@ -15,7 +15,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Rigidbody2D Rigidbody2D;
     [SerializeField] private SpeereMovement _speereMovement;
 
-    private float velocity = 2;
+    [SerializeField] private float velocity = 2;
+
     private bool _isSpeereActive = false;
 
     private readonly string _moveRightCommand = "MoveRight";
@@ -32,6 +33,8 @@ public class PlayerMovement : MonoBehaviour
 
         //avoid the speere hit the player
         Physics2D.IgnoreLayerCollision(9, 8);
+
+        //avoid the speere hit the floor
         Physics2D.IgnoreLayerCollision(10, 8);
     }
 
