@@ -410,6 +410,7 @@ MonoBehaviour:
   _finishLevelScreen: {fileID: 8133705092441197099, guid: 2c5c81b0bf6f038489df2a64bdce19e5, type: 3}
   _gameOverScreenManager: {fileID: 2440309483164931253, guid: 8bdd0513888612746b3deadbdfc33b73, type: 3}
   _finishGameScreenManager: {fileID: 3982276873494811157, guid: bcb188f150c61b84784e0d0c5870a95a, type: 3}
+  _audioManager: {fileID: 2571940811491175361, guid: e1badfa0b2bf50746913ded2bc313446, type: 3}
 --- !u!4 &1800580540
 Transform:
   m_ObjectHideFlags: 0

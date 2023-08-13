@@ -19,6 +19,8 @@ public class GameViewManager : MonoBehaviour
 
     [SerializeField] private FinishGameScreenManager _finishGameScreenManager;
 
+    [SerializeField] private AudioManager _audioManager;
+
     //The Core Game manager
     private CoreGameFlow _coreGameFlow;
 
@@ -39,7 +41,13 @@ public class GameViewManager : MonoBehaviour
         EventsManager.StartGameOnDefaultLevelEvent.AddListener(()=>EventsManager.StartGameEvent.Invoke(_coreGameFlow.GetLevelNumber()));
         _coreGameFlow = new CoreGameFlow();
         InitializeGameMenu();
+        InitializeAudioSource();
 
+    }
+
+    private void InitializeAudioSource()
+    {
+        _audioManager = Instantiate(_audioManager);
     }
 
     private void OnGameOver()
