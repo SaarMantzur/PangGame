@@ -8,7 +8,8 @@ public class ButtonsInputSystem : MonoBehaviour
 {
     [SerializeField] private ButtonsInputData _moveRightButton;
     [SerializeField] private ButtonsInputData _moveLeftButton;
-    [SerializeField] private ButtonsInputData _fireButton;
+
+    [SerializeField] private Button _fireButton;
 
     private void Awake()
     {
@@ -18,8 +19,7 @@ public class ButtonsInputSystem : MonoBehaviour
         _moveLeftButton.SetOnButtonPressedAction(EventsManager.MoveLeftEvent.Invoke);
         _moveLeftButton.SetOnButtonUnPressedAction(EventsManager.MoveIdleEvent.Invoke);
 
-        _fireButton.SetOnButtonPressedAction(EventsManager.FireEvent.Invoke);
-        _fireButton.SetOnButtonUnPressedAction(EventsManager.MoveIdleEvent.Invoke);
-
+        _fireButton.onClick.AddListener(EventsManager.FireEvent.Invoke);
+        _fireButton.onClick.AddListener(EventsManager.MoveIdleEvent.Invoke);
     }
 }

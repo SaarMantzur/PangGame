@@ -11,9 +11,14 @@ public class ViewLevelManager : MonoBehaviour
     [SerializeField] private PlayerMovement _player;
     [SerializeField] private RawImage _background;
 
+    [SerializeField] private ProjectileMovement _originalProjectileResource;
+    [SerializeField] private Transform _projectileStartPoint;
+
+    private ProjectileMovement _projectileMovement;
+
     private List<BallView> _createdBallView = new List<BallView>();
 
-
+    private bool _isProjectileActive = false;
     private void Awake()
     {
         _canvas.renderMode = RenderMode.ScreenSpaceCamera;
@@ -26,6 +31,10 @@ public class ViewLevelManager : MonoBehaviour
 
         EventsManager.SplitEvent.AddListener(Split);
         EventsManager.FinishLevelEvent.AddListener(ClearLevel);
+
+        EventsManager.ProjectileDestroyedEvent.AddListener(() => { _isProjectileActive = false; });
+        EventsManager.FireEvent.AddListener(InitializeProjectile);
+
     }
 
     private void Split(BallView ballView)
@@ -80,6 +89,16 @@ public class ViewLevelManager : MonoBehaviour
         }
     }
 
+    private void InitializeProjectile()
+    {
+        if (!_isProjectileActive)
+        {
+            _isProjectileActive = true;
+            _projectileMovement = Instantiate(_originalProjectileResource);
+            _projectileMovement.transform.position = _projectileStartPoint.position;
+        }
+    }
+
     public void ClearLevel()
     {
         if (_createdBallView.Count > 0)
@@ -89,6 +108,12 @@ public class ViewLevelManager : MonoBehaviour
                 Destroy(ballView.gameObject);
             }
         }
+
+        if(_isProjectileActive)
+        {
+            _projectileMovement.DestroyProjectile();
+        }
+
         _createdBallView.Clear();
         _player.transform.localPosition = Vector2.zero;
     }

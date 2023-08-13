@@ -10,14 +10,16 @@ using UnityEngine;
 /// </summary>
 public class PlayerMovement : MonoBehaviour
 {
+    private readonly int _projectileLayer = 8;
+    private readonly int _playerLayer = 9;
+    private readonly int _floorLayer = 10;
 
-    [SerializeField] private Animator MovementAnimator;
-    [SerializeField] private Rigidbody2D Rigidbody2D;
-    [SerializeField] private SpeereMovement _speereMovement;
+    [SerializeField] private Animator _movementAnimator;
+    [SerializeField] private Rigidbody2D _rigidbody2D;
 
-    [SerializeField] private float velocity = 2;
+    [SerializeField] private float _velocity = 2;
 
-    private bool _isSpeereActive = false;
+    private bool _isProjectileActive = false;
 
     private readonly string _moveRightCommand = "MoveRight";
     private readonly string _moveLeftCommand = "MoveLeft";
@@ -29,50 +31,40 @@ public class PlayerMovement : MonoBehaviour
         EventsManager.MoveRightEvent.AddListener(MoveRight);
         EventsManager.FireEvent.AddListener(Fire);
         EventsManager.MoveIdleEvent.AddListener(CommitIdle);
-        EventsManager.SpeereDestroyed.AddListener(() => { _isSpeereActive = false; });
 
-        //avoid the speere hit the player
-        Physics2D.IgnoreLayerCollision(9, 8);
+        //avoid the Projectile hit the player
+        Physics2D.IgnoreLayerCollision(_playerLayer, _projectileLayer);
 
-        //avoid the speere hit the floor
-        Physics2D.IgnoreLayerCollision(10, 8);
+        //avoid the Projectile hit the floor
+        Physics2D.IgnoreLayerCollision(_floorLayer, _projectileLayer);
     }
 
     public void CommitIdle()
     {
-        Rigidbody2D.velocity = new Vector2(0, 0);
-        MovementAnimator.SetBool(_moveRightCommand, false);
-        MovementAnimator.SetBool(_moveLeftCommand, false);
-        MovementAnimator.SetBool(_fireCommand, false);
+        _rigidbody2D.velocity = new Vector2(0, 0);
+        _movementAnimator.SetBool(_moveRightCommand, false);
+        _movementAnimator.SetBool(_moveLeftCommand, false);
+        _movementAnimator.SetBool(_fireCommand, false);
     }
 
     public void MoveRight()
     {
-        Rigidbody2D.velocity = new Vector2(velocity, 0);
-        MovementAnimator.SetBool(_moveRightCommand, true);
+        _rigidbody2D.velocity = new Vector2(_velocity, 0);
+        _movementAnimator.SetBool(_moveRightCommand, true);
     }
 
     public void MoveLeft()
     {
-        Rigidbody2D.velocity = new Vector2(-velocity, 0);
-        MovementAnimator.SetBool(_moveLeftCommand, true);
+        _rigidbody2D.velocity = new Vector2(-_velocity, 0);
+        _movementAnimator.SetBool(_moveLeftCommand, true);
     }
 
     public void Fire()
     {
-        if (!_isSpeereActive)
+        if (!_isProjectileActive)
         {
-            Rigidbody2D.velocity = new Vector2(0, 0);
-            MovementAnimator.SetBool(_fireCommand, true);
-            InitializeSpeere();
+            _rigidbody2D.velocity = new Vector2(0, 0);
+            _movementAnimator.SetBool(_fireCommand, true);
         }
-    }
-
-    private void InitializeSpeere()
-    {
-        _isSpeereActive = true;
-        SpeereMovement speereMovement = Instantiate(_speereMovement);
-        speereMovement.transform.position = transform.position - Vector3.up;
-        
     }
 }
