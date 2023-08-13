@@ -33,7 +33,7 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &7012524061824624383
 SpriteRenderer:
@@ -106,8 +106,8 @@ Rigidbody2D:
   m_Material: {fileID: 6200000, guid: 6334e4272a557e14abaa86d2967d852c, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 1
-  m_Constraints: 0
+  m_CollisionDetection: 0
+  m_Constraints: 4
 --- !u!58 &7012524061824624381
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -138,5 +138,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _spriteRenderer: {fileID: 7012524061824624383}
   _rigidbody2: {fileID: 7012524061824624376}
-  _velocityScalar: 0.2
+  _moveSpeed: 2
   _size: 0
+  _accelarator: 0

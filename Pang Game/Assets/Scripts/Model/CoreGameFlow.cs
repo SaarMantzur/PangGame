@@ -14,13 +14,11 @@ public class CoreGameFlow
 
     public CoreGameFlow()
     {
-        Debug.Log("Saar: " + PlayerPrefs.GetInt(_savedLevelPrefes));
 
-        GameFlowLevelsList.Add(CreateLevel());
         GameFlowLevelsList.Add(CreateLevel1());
-        //GameFlowLevelsList.Add(CreateLevel2());
-        //GameFlowLevelsList.Add(CreateLevel3());
-        //GameFlowLevelsList.Add(CreateLevel4());
+        GameFlowLevelsList.Add(CreateLevel2());
+        GameFlowLevelsList.Add(CreateLevel3());
+        GameFlowLevelsList.Add(CreateLevel4());
 
         EventsManager.StartGameEvent.AddListener((i) => 
         {
@@ -65,9 +63,9 @@ public class CoreGameFlow
 
     private LevelInstructions CreateLevel1()
     {
-        BallData ballData1 = new BallData(1, new Vector2(-1, 2), Color.red, 0);
+        BallData ballData1 = new BallData(1, new Vector2(-1, 2), Color.red, 1);
 
-        BallData ballData2 = new BallData(1, new Vector2(-2, 2), Color.cyan, 0);
+        BallData ballData2 = new BallData(1, new Vector2(-2, 2), Color.cyan, -1);
 
         LevelInstructions levelInstructions = new LevelInstructions();
 

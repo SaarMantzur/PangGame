@@ -35,7 +35,8 @@ public class ViewLevelManager : MonoBehaviour
 
         EventsManager.ProjectileDestroyedEvent.AddListener(() => { _isProjectileActive = false; });
         EventsManager.FireEvent.AddListener(InitializeProjectile);
-        EventsManager.StartGameEvent.AddListener((i)=> { print(i); _cageManagerInfo.SetData(i); });
+        EventsManager.StartGameEvent.AddListener((i)=> _cageManagerInfo.SetData(i));
+        EventsManager.BallHitRoofEvent.AddListener(DestroyBall);
 
     }
 
@@ -48,37 +49,44 @@ public class ViewLevelManager : MonoBehaviour
             leftBallData.BallDirection = -1;
             leftBallData.BallSize = ballView.GetSize() - 1;
             leftBallData.BallLocation = ballView.transform.localPosition;
-            CreateNewBall(leftBallData);
+            CreateNewBall(leftBallData, true);
 
             DataStructures.BallData rightBallData = new DataStructures.BallData();
             rightBallData.BallColor = ballView.GetColor();
             rightBallData.BallDirection = 1;
             rightBallData.BallSize = ballView.GetSize() - 1;
             rightBallData.BallLocation = ballView.transform.localPosition;
-
-            CreateNewBall(rightBallData);
+            CreateNewBall(rightBallData, true);
         }
 
-        _createdBallView.Remove(ballView);
-        Destroy(ballView.gameObject);
+        DestroyBall(ballView);
 
-        if(_createdBallView.Count == 0)
+        if (_createdBallView.Count == 0)
             EventsManager.FinishLevelEvent.Invoke();
 
 
+    }
+
+    private void DestroyBall(BallView ballView)
+    {
+        if(ballView != null)
+        {
+            _createdBallView.Remove(ballView);
+            Destroy(ballView.gameObject);
+        }
     }
 
     public void CreateLevelByLevelData(DataStructures.LevelInstructions levelInstructions)
     {
         foreach (var ballData in levelInstructions.ballsData)
         {
-            CreateNewBall(ballData);
+            CreateNewBall(ballData, false);
         }
         if(levelInstructions.BackgroundImage != null)
             _background.texture = levelInstructions.BackgroundImage;
     }
 
-    private void CreateNewBall(DataStructures.BallData ballData)
+    private void CreateNewBall(DataStructures.BallData ballData, bool isSplitted)
     {
         BallView ballView = Instantiate(_originalBallView);
         if (ballView != null)
@@ -86,7 +94,11 @@ public class ViewLevelManager : MonoBehaviour
             ballView.SetDirection(ballData.BallDirection);
             ballView.SetColor(ballData.BallColor);
             ballView.SetSize(ballData.BallSize);
-            ballView.transform.localPosition = ballData.BallLocation;
+            ballView.transform.position = ballData.BallLocation;
+            if(isSplitted)
+            {
+                StartCoroutine(ballView.Jump());
+            }
             _createdBallView.Add(ballView);
         }
     }

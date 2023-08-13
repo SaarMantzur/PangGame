@@ -28,6 +28,7 @@ public static class EventsManager
     public static UnityEvent ProjectileDestroyedEvent = new UnityEvent();
 
     public static UnityEvent<BallView> SplitEvent = new UnityEvent<BallView>();
+    public static UnityEvent<BallView> BallHitRoofEvent = new UnityEvent<BallView>();
 
     public static UnityEvent StopMovingEvent = new UnityEvent();
 

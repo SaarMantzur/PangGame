@@ -25,6 +25,7 @@ public class DataStructures
         //The directopn in which the ball shall move first. (-1 for left and 1 for right. Any other number would increase the speed to that direction.)
         public int BallDirection;
 
+
         public BallData(int ballSize, Vector2 ballLocation, Color ballColor, int ballDirection)
         {
             BallSize = ballSize;
