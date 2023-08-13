@@ -12,7 +12,6 @@ public class ProjectileMovement : MonoBehaviour
     void Update()
     {
         _rigidbody2.velocity = Vector2.up * _velocity;
-        //_rigidbody2.AddForce(new Vector2(0, _velocity));
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

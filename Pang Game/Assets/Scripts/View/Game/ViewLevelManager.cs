@@ -13,6 +13,7 @@ public class ViewLevelManager : MonoBehaviour
 
     [SerializeField] private ProjectileMovement _originalProjectileResource;
     [SerializeField] private Transform _projectileStartPoint;
+    [SerializeField] private CageInfoManager _cageManagerInfo;
 
     private ProjectileMovement _projectileMovement;
 
@@ -34,6 +35,7 @@ public class ViewLevelManager : MonoBehaviour
 
         EventsManager.ProjectileDestroyedEvent.AddListener(() => { _isProjectileActive = false; });
         EventsManager.FireEvent.AddListener(InitializeProjectile);
+        EventsManager.StartGameEvent.AddListener((i)=> { print(i); _cageManagerInfo.SetData(i); });
 
     }
 
@@ -115,6 +117,7 @@ public class ViewLevelManager : MonoBehaviour
         }
 
         _createdBallView.Clear();
+        _player.CommitIdle();
         _player.transform.localPosition = Vector2.zero;
     }
 }

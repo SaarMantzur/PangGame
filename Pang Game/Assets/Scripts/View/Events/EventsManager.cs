@@ -17,6 +17,8 @@ public static class EventsManager
 
     public static UnityEvent FinishLevelEvent = new UnityEvent();
 
+    public static UnityEvent FinishGameEvent = new UnityEvent();
+
 
     public static UnityEvent MoveRightEvent = new UnityEvent();
     public static UnityEvent MoveLeftEvent = new UnityEvent();
@@ -26,6 +28,8 @@ public static class EventsManager
     public static UnityEvent ProjectileDestroyedEvent = new UnityEvent();
 
     public static UnityEvent<BallView> SplitEvent = new UnityEvent<BallView>();
+
+    public static UnityEvent StopMovingEvent = new UnityEvent();
 
     public static UnityEvent StartGameOnDefaultLevelEvent = new UnityEvent();
     public static UnityEvent<int> StartGameEvent = new UnityEvent<int>();

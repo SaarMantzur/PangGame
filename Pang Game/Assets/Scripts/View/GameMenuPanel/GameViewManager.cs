@@ -17,26 +17,29 @@ public class GameViewManager : MonoBehaviour
 
     [SerializeField] private GameOverScreenManager _gameOverScreenManager;
 
+    [SerializeField] private FinishGameScreenManager _finishGameScreenManager;
+
     //The Core Game manager
     private CoreGameFlow _coreGameFlow;
 
     private GameMenuManager _gameMenuManager;
 
     private bool _isLevelInstantiated = false;
-
     private bool _isLevelScreenInstantiated = false;
-
     private bool _isGameOverScreenInstatiated = false;
+    private bool _isGameFinishedScreenInstatiated = false;
 
     private void Awake()
     {
         EventsManager.StartNewLevelEvent.AddListener(InitializeGameLevel);
-        EventsManager.FinishLevelEvent.AddListener(InitializeFinishLevelScreen);
+        EventsManager.FinishLevelEvent.AddListener(OnFinishLevel);
         EventsManager.ShowGameMenuEvent.AddListener(OnShowMenuEvent);
         EventsManager.EndGameEvent.AddListener(OnGameOver);
+        
         EventsManager.StartGameOnDefaultLevelEvent.AddListener(()=>EventsManager.StartGameEvent.Invoke(_coreGameFlow.GetLevelNumber()));
-        InitializeGameMenu();
         _coreGameFlow = new CoreGameFlow();
+        InitializeGameMenu();
+
     }
 
     private void OnGameOver()
@@ -47,6 +50,7 @@ public class GameViewManager : MonoBehaviour
 
     private void OnShowMenuEvent()
     {
+        _finishGameScreenManager.gameObject.SetActive(false);
         _finishLevelScreen.gameObject.SetActive(false);
         _gameOverScreenManager.gameObject.SetActive(false);
         _gameMenuManager.SetCurrentLevel(_coreGameFlow.GetLevelNumber());
@@ -75,6 +79,40 @@ public class GameViewManager : MonoBehaviour
         _gameOverScreenManager.SetData(_coreGameFlow.GetLevelNumber());
     }
 
+    private void InitializeFinishGameScreen()
+    {
+        if (!_isGameFinishedScreenInstatiated)
+        {
+            _finishGameScreenManager = Instantiate(_finishGameScreenManager);
+            _isGameFinishedScreenInstatiated = true;
+            _finishGameScreenManager.gameObject.SetActive(true);
+
+            RectTransform rectTransform = _finishGameScreenManager.GetComponent<RectTransform>();
+
+            rectTransform.SetParent(_gameCanvas.transform);
+            rectTransform.offsetMax = new Vector2(0, 0);
+            rectTransform.offsetMin = new Vector2(0, 0);
+
+        }
+        else
+        {
+            _finishGameScreenManager.gameObject.SetActive(true);
+        }
+    }
+
+    private void OnFinishLevel()
+    {
+        if(_coreGameFlow.FinishLevel())
+        {
+            print("FinishLevel is true");
+            InitializeFinishLevelScreen();
+        }
+        else
+        {
+            InitializeFinishGameScreen();
+        }
+    }
+
     private void InitializeFinishLevelScreen()
     {
         //Make sure the _finishLevelScreen is only instantiated once to the scene.
@@ -83,7 +121,6 @@ public class GameViewManager : MonoBehaviour
             _finishLevelScreen = Instantiate(_finishLevelScreen);
             _isLevelScreenInstantiated = true;
             _finishLevelScreen.gameObject.SetActive(true);
-            _finishLevelScreen.SetData(_coreGameFlow.GetLevelNumber());
 
             RectTransform rectTransform = _finishLevelScreen.GetComponent<RectTransform>();
 
@@ -132,7 +169,7 @@ public class GameViewManager : MonoBehaviour
         {
             _gameMenu = Instantiate(_gameMenu);
             RectTransform menuRectTransform = _gameMenu.GetComponent<RectTransform>();
-            InitializeGameMenuByRectTransform(menuRectTransform);
+            InitializeScreenRectTransform(menuRectTransform);
             _gameMenuManager = _gameMenu.GetComponent<GameMenuManager>();
         }
     }
@@ -141,12 +178,10 @@ public class GameViewManager : MonoBehaviour
     /// Initializes the game menu ny RectTransform componnent.
     /// </summary>
     /// <param name="rectTransform">The RectTransform Componnent of the menu</param>
-    private void InitializeGameMenuByRectTransform(RectTransform rectTransform)
+    private void InitializeScreenRectTransform(RectTransform rectTransform)
     {
         rectTransform.SetParent(_gameCanvas.transform);
         rectTransform.offsetMax = new Vector2(0, 0);
         rectTransform.offsetMin = new Vector2(0, 0);
     }
-
-
 }

@@ -13,6 +13,12 @@ public class ButtonsInputData : MonoBehaviour, IPointerDownHandler, IPointerUpHa
     private UnityAction _onButtonUnPressedAction;
     private bool _isPressed;
 
+    private void Awake()
+    {
+        EventsManager.EndGameEvent.AddListener(() => _isPressed = false);
+        EventsManager.FinishLevelEvent.AddListener(() => _isPressed = false);
+    }
+
     public void OnPointerDown(PointerEventData eventData)
     {
         _isPressed = true;

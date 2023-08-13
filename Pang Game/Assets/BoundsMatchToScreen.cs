@@ -15,9 +15,9 @@ public class BoundsMatchToScreen : MonoBehaviour
     [SerializeField] private BoxCollider2D _rightWallColliderTransform;
     [SerializeField] private BoxCollider2D _leftWallColliderTransform;
 
-    [SerializeField] private RectTransform  _roofUI;
-    [SerializeField] private RectTransform  _floorUI;
-    [SerializeField] private RectTransform  _rightWallUI;
+    [SerializeField] private RectTransform _roofUI;
+    [SerializeField] private RectTransform _floorUI;
+    [SerializeField] private RectTransform _rightWallUI;
     [SerializeField] private RectTransform _leftWallUI;
 
     private Camera _mainCamera;
@@ -48,15 +48,5 @@ public class BoundsMatchToScreen : MonoBehaviour
 
         // Set the collider's position
         boxCollider2D.transform.position = colliderPosition;
-    }
-
-
-
-
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

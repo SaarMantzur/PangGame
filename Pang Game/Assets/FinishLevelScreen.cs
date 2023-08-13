@@ -15,7 +15,7 @@ public class FinishLevelScreen : MonoBehaviour
     {
         if(_nextLevelButton != null)
         {
-            _nextLevelButton.onClick.AddListener(()=>EventsManager.StartGameEvent.Invoke(_currentLevelNumber+1));
+            _nextLevelButton.onClick.AddListener(()=>EventsManager.StartGameEvent.Invoke(_currentLevelNumber));
         }
 
         if (_backToMenuButton != null)
@@ -27,6 +27,6 @@ public class FinishLevelScreen : MonoBehaviour
     public void SetData(int currentLevelNumber)
     {
         _currentLevelNumber = currentLevelNumber;
-        _nextLevelText.text = "Ready For Level " + _currentLevelNumber+1 + "?";
+        _nextLevelText.text = "Ready For Level " + _currentLevelNumber + "?";
     }
 }
