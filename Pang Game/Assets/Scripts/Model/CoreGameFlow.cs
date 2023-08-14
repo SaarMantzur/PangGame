@@ -94,8 +94,8 @@ public class CoreGameFlow
         LevelInstructions levelInstructions = new LevelInstructions();
 
         //add it to level instructions
-        levelInstructions.ballsData.Add(ballData1);
-
+        levelInstructions.BallsData.Add(ballData1);
+        levelInstructions.TimeLengthInSeconds = 180;
         return levelInstructions;
     }
 
@@ -107,8 +107,9 @@ public class CoreGameFlow
 
         LevelInstructions levelInstructions = new LevelInstructions();
 
-        levelInstructions.ballsData.Add(ballData1);
-        levelInstructions.ballsData.Add(ballData2);
+        levelInstructions.BallsData.Add(ballData1);
+        levelInstructions.BallsData.Add(ballData2);
+        levelInstructions.TimeLengthInSeconds = 10;
 
         return levelInstructions;
     }
@@ -121,8 +122,9 @@ public class CoreGameFlow
 
         LevelInstructions levelInstructions = new LevelInstructions();
 
-        levelInstructions.ballsData.Add(ballData1);
-        levelInstructions.ballsData.Add(ballData2);
+        levelInstructions.BallsData.Add(ballData1);
+        levelInstructions.BallsData.Add(ballData2);
+        levelInstructions.TimeLengthInSeconds = 30;
 
         return levelInstructions;
     }
@@ -132,7 +134,8 @@ public class CoreGameFlow
         BallData ballData = new BallData(3,new Vector2(3,3), Color.blue, 2);
 
         LevelInstructions levelInstructions = new LevelInstructions();
-        levelInstructions.ballsData.Add(ballData);
+        levelInstructions.BallsData.Add(ballData);
+        levelInstructions.TimeLengthInSeconds = 60;
 
         return levelInstructions;
     }
@@ -142,7 +145,8 @@ public class CoreGameFlow
         BallData ballData = new BallData(4, new Vector2(3, 3), Color.magenta, 2);
 
         LevelInstructions levelInstructions = new LevelInstructions();
-        levelInstructions.ballsData.Add(ballData);
+        levelInstructions.BallsData.Add(ballData);
+        levelInstructions.TimeLengthInSeconds = 70;
 
         return levelInstructions;
     }
@@ -153,8 +157,9 @@ public class CoreGameFlow
         BallData ballData1 = new BallData(4, new Vector2(0, 3), Color.magenta, -1);
 
         LevelInstructions levelInstructions = new LevelInstructions();
-        levelInstructions.ballsData.Add(ballData);
-        levelInstructions.ballsData.Add(ballData1);
+        levelInstructions.BallsData.Add(ballData);
+        levelInstructions.BallsData.Add(ballData1);
+        levelInstructions.TimeLengthInSeconds = 120;
 
         return levelInstructions;
     }

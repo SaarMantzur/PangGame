@@ -7,8 +7,9 @@ public class DataStructures
 
     public class LevelInstructions
     {
-        public List<BallData> ballsData = new List<BallData>();
+        public List<BallData> BallsData = new List<BallData>();
         public Texture BackgroundImage;
+        public float TimeLengthInSeconds;
     }
 
     public class BallData

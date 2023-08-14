@@ -13,7 +13,7 @@ public class ViewLevelManager : MonoBehaviour
     [SerializeField] private Canvas _canvas;
     [SerializeField] private PlayerMovement _player;
     [SerializeField] private RawImage _background;
-
+    [SerializeField] private TimeSlider _timeSlider;
     [SerializeField] private ProjectileMovement _originalProjectileResource;
     [SerializeField] private Transform _projectileStartPoint;
     [SerializeField] private CageInfoManager _cageManagerInfo;
@@ -52,7 +52,7 @@ public class ViewLevelManager : MonoBehaviour
         EventsManager.FireEvent.AddListener(_player.Fire);
         EventsManager.MoveIdleEvent.AddListener(_player.CommitIdle);
 
-
+        
     }
 
 
@@ -116,12 +116,14 @@ public class ViewLevelManager : MonoBehaviour
     /// <param name="levelInstructions"></param>
     public void CreateLevelByLevelData(LevelInstructions levelInstructions)
     {
-        foreach (var ballData in levelInstructions.ballsData)
+        foreach (var ballData in levelInstructions.BallsData)
         {
             CreateNewBall(ballData, false);
         }
         if(levelInstructions.BackgroundImage != null)
             _background.texture = levelInstructions.BackgroundImage;
+        _timeSlider.SetTime(levelInstructions.TimeLengthInSeconds);
+        _timeSlider.StartTime();
     }
 
 
@@ -130,7 +132,7 @@ public class ViewLevelManager : MonoBehaviour
     /// </summary>
     /// <param name="ballData">the data used to describe the ball</param>
     /// <param name="isSplitted">true if the it is required to create a new ball beacuase of a split</param>
-    private void CreateNewBall(DataStructures.BallData ballData, bool isSplitted)
+    private void CreateNewBall(BallData ballData, bool isSplitted)
     {
         BallView ballView = Instantiate(_originalBallView);
         if (ballView != null)
@@ -187,5 +189,6 @@ public class ViewLevelManager : MonoBehaviour
         _player.CommitIdle();
         _player.RestoreToOriginalPosition();
         _cageManagerInfo.SetData(_levelNumber);
+        _timeSlider.ResetTime();
     }
 }
