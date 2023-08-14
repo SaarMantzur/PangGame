@@ -74,14 +74,14 @@ public class ViewLevelManager : MonoBehaviour
     {
         if (ballView.GetSize() > 1)
         {
-            DataStructures.BallData leftBallData = new DataStructures.BallData();
+            BallData leftBallData = new BallData();
             leftBallData.BallColor = ballView.GetColor();
             leftBallData.BallDirection = -1;
             leftBallData.BallSize = ballView.GetSize() - 1;
             leftBallData.BallLocation = ballView.transform.localPosition;
             CreateNewBall(leftBallData, true);
 
-            DataStructures.BallData rightBallData = new DataStructures.BallData();
+            BallData rightBallData = new BallData();
             rightBallData.BallColor = ballView.GetColor();
             rightBallData.BallDirection = 1;
             rightBallData.BallSize = ballView.GetSize() - 1;
@@ -186,5 +186,6 @@ public class ViewLevelManager : MonoBehaviour
         _createdBallView.Clear();
         _player.CommitIdle();
         _player.RestoreToOriginalPosition();
+        _cageManagerInfo.SetData(_levelNumber);
     }
 }

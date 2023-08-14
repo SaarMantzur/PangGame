@@ -50,6 +50,9 @@ public class GameContorllerManager : MonoBehaviour
         _viewLevelManager.SetData(_coreGameFlow.GetLevelNumber());
     }
 
+    /// <summary>
+    /// called when new level is initialize
+    /// </summary>
     private void OnInitializeNewLevel()
     {
         InitializeGameLevel(_coreGameFlow.StartNewLevel());
@@ -61,6 +64,7 @@ public class GameContorllerManager : MonoBehaviour
         _coreGameFlow.ResetLevelsToZero();
         OnInitializeNewLevel();
         _gameMenuManager.HideShowMenuEvent(false);
+        _viewLevelManager.SetData(_coreGameFlow.GetLevelNumber());
     }
 
     //Initialize the AudioSource at the begining of the play
@@ -76,6 +80,9 @@ public class GameContorllerManager : MonoBehaviour
         _viewLevelManager.ClearLevel();
     }
 
+    /// <summary>
+    /// Show the menu Screen
+    /// </summary>
     private void OnShowMenuEvent()
     {
         _finishGameScreenManager.gameObject.SetActive(false);
@@ -85,6 +92,9 @@ public class GameContorllerManager : MonoBehaviour
         _gameMenuManager.HideShowMenuEvent(true);
     }
 
+    /// <summary>
+    /// Initialize the game over screen
+    /// </summary>
     private void InitializeGameOverScreen()
     {
         //Make sure the _finishLevelScreen is only instantiated once to the scene.
@@ -108,6 +118,9 @@ public class GameContorllerManager : MonoBehaviour
         _gameOverScreenManager.SetData(_coreGameFlow.GetLevelNumber());
     }
 
+    /// <summary>
+    /// Initialize the screen of the finish game
+    /// </summary>
     private void InitializeFinishGameScreen()
     {
         if (!_isGameFinishedScreenInstatiated)
@@ -134,6 +147,7 @@ public class GameContorllerManager : MonoBehaviour
         if(_coreGameFlow.FinishLevel())
         {
             InitializeFinishLevelScreen();
+            _viewLevelManager.SetData(_coreGameFlow.GetLevelNumber());
         }
         else
         {
@@ -141,6 +155,9 @@ public class GameContorllerManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Initializr the screen of finish level
+    /// </summary>
     private void InitializeFinishLevelScreen()
     {
         //Make sure the _finishLevelScreen is only instantiated once to the scene.
@@ -164,6 +181,9 @@ public class GameContorllerManager : MonoBehaviour
         _finishLevelScreen.SetData(_coreGameFlow.GetLevelNumber());
     }
 
+    /// <summary>
+    /// Initialize all items in the game based on the data stored in levelInstruction
+    /// </summary>
     private void InitializeGameLevel(DataStructures.LevelInstructions levelInstructions)
     {
         if (levelInstructions != null)

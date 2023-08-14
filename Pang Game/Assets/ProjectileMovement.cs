@@ -1,7 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Manages the movement and behavior of a projectile object.
+/// </summary>
 public class ProjectileMovement : MonoBehaviour
 {
     [SerializeField] private Rigidbody2D _rigidbody2;
@@ -14,15 +15,24 @@ public class ProjectileMovement : MonoBehaviour
         _rigidbody2.velocity = Vector2.up * _velocity;
     }
 
+    /// <summary>
+    /// Handles collision events with other objects.
+    /// </summary>
+    /// <param name="collision">The collision information.</param>
     private void OnCollisionEnter2D(Collision2D collision)
     {
         int collisionLayer = collision.gameObject.layer;
-        if(collisionLayer == 3 || collisionLayer == 7)
+
+        // Destroy the projectile upon collision with certain layers
+        if (collisionLayer == GameData.BallsLayer || collisionLayer == GameData.RoofLayer)
         {
             DestroyProjectile();
         }
     }
 
+    /// <summary>
+    /// Destroys the projectile and invokes the ProjectileDestroyedEvent.
+    /// </summary>
     public void DestroyProjectile()
     {
         EventsManager.ProjectileDestroyedEvent.Invoke();
