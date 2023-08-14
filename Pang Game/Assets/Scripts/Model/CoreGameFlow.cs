@@ -20,11 +20,7 @@ public class CoreGameFlow
 
     public CoreGameFlow()
     {
-
         CreateAllLevels();
-
-
-
         _levelNumber = PlayerPrefs.GetInt(_savedLevelPrefes);
     }
 
@@ -105,7 +101,7 @@ public class CoreGameFlow
 
     private LevelInstructions CreateLevel1()
     {
-        BallData ballData1 = new BallData(1, new Vector2(-1, 2), Color.red, 1);
+        BallData ballData1 = new BallData(1, new Vector2(2, 2), Color.red, 1);
 
         BallData ballData2 = new BallData(1, new Vector2(-2, 2), Color.cyan, -1);
 
