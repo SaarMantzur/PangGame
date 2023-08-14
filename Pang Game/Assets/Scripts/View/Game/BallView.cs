@@ -90,33 +90,23 @@ public class BallView : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         int collisionLayerNumber = collision.gameObject.layer;
-        switch (collisionLayerNumber)
-        {
-            //ball hit one of the walls
-            case 6:
-                //change direction of the ball
-                SetDirection(_direction *= (-1));
-                break;
 
-            //ball hit the roof
-            case 7:
-                //destroy the ball
-                EventsManager.SplitEvent.Invoke(this);
-                break;
+        if(collisionLayerNumber == GameData.WallsLayer)
+            SetDirection(_direction *= (-1));
 
-            //Player shot ball
-            case 8:
-                //split ball
-                EventsManager.SplitEvent.Invoke(this);
-                break;
+        //ball hit the roof
+        if (collisionLayerNumber == GameData.RoofLayer)
+            //destroy the ball
+            EventsManager.SplitEvent.Invoke(this);
 
-            //ball hit Player
-            case 9:
-                //kill player
-                EventsManager.EndGameEvent.Invoke();
-                break;
+        //Player shot ball
+        if (collisionLayerNumber == GameData.ProjectileLayer)
+            //split ball
+            EventsManager.SplitEvent.Invoke(this);
 
-
-        }
+        //ball hit Player
+        if (collisionLayerNumber == GameData.PlayerLayer)
+            //kill player
+            EventsManager.EndGameEvent.Invoke();
     }
 }
