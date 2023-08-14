@@ -32,6 +32,6 @@ public class FinishLevelScreen : MonoBehaviour
     public void SetData(int currentLevelNumber)
     {
         _currentLevelNumber = currentLevelNumber;
-        _nextLevelText.text = "Ready For Level " + _currentLevelNumber + "?";
+        _nextLevelText.text = "Ready For Level " + (_currentLevelNumber+1).ToString() + "?";
     }
 }
