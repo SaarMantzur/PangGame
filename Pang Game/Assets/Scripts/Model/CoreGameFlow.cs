@@ -109,7 +109,7 @@ public class CoreGameFlow
 
         levelInstructions.BallsData.Add(ballData1);
         levelInstructions.BallsData.Add(ballData2);
-        levelInstructions.TimeLengthInSeconds = 10;
+        levelInstructions.TimeLengthInSeconds = 20;
 
         return levelInstructions;
     }
