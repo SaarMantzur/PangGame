@@ -15,7 +15,7 @@ public class BallView : MonoBehaviour
     //[SerializeField] private float _moveSpeed = 0.001f;
 
     float _overBounceTime = 0.1f;
-    float _accelaratorBounceForce = 15;
+    float _accelaratorBounceForce = 20;
 
     //The color for the ball
     private Color _color;

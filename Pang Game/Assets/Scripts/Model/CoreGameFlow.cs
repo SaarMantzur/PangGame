@@ -1,47 +1,77 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static DataStructures;
 
 /// <summary>
-/// Represents the model layer
+/// Represents the model layer of the Game.
+/// In this class creating a new level is within the code,
+/// without changing scenes.
+/// 
+/// The ultimate way to create a new level is with a server sending a Json \ Yaml files
+/// to client, but because of time requirements and task requirements I have decided to use internal code
+/// as an example of an easy way to edit the levels and add new ones.
 /// </summary>
 public class CoreGameFlow
 {
-    private List<LevelInstructions> GameFlowLevelsList = new List<LevelInstructions>();
+    //stores the data of all the levels of the game
+    private List<LevelInstructions> gameFlowLevelsList = new List<LevelInstructions>();
     private int _levelNumber;
     private string _savedLevelPrefes = "LevelNumber";
 
     public CoreGameFlow()
     {
 
-        GameFlowLevelsList.Add(CreateLevel1());
-        GameFlowLevelsList.Add(CreateLevel2());
-        GameFlowLevelsList.Add(CreateLevel3());
-        GameFlowLevelsList.Add(CreateLevel4());
+        CreateAllLevels();
 
-        EventsManager.StartGameEvent.AddListener((i) => 
-        {
-            if (i<GameFlowLevelsList.Count)
-                EventsManager.StartNewLevelEvent.Invoke(GameFlowLevelsList[i]);
-        });
+
+
+        _levelNumber = PlayerPrefs.GetInt(_savedLevelPrefes);
     }
 
+    public LevelInstructions StartNewLevel()
+    {
+        if (_levelNumber < gameFlowLevelsList.Count)
+            return gameFlowLevelsList[_levelNumber];
+        return null;
+    }
+
+    /// <summary>
+    /// Add all levels
+    /// </summary>
+    private void CreateAllLevels()
+    {
+        gameFlowLevelsList.Add(CreateLevel1());
+        gameFlowLevelsList.Add(CreateLevel2());
+        gameFlowLevelsList.Add(CreateLevel3());
+        gameFlowLevelsList.Add(CreateLevel4());
+        gameFlowLevelsList.Add(CreateLevel5());
+    }
+
+    /// <summary>
+    /// called when a level is finishd to check the result
+    /// </summary>
+    /// <returns>returns true if moving to next level, false if all level are finished</returns>
     public bool FinishLevel()
     {
-        if (_levelNumber < GameFlowLevelsList.Count - 1)
+        if (_levelNumber < gameFlowLevelsList.Count - 1)
         {
             _levelNumber++;
+            //save the result to device so will start the same level later
             PlayerPrefs.SetInt(_savedLevelPrefes, _levelNumber);
             return true;
         }
         else
         {
             EventsManager.FinishGameEvent.Invoke();
-            PlayerPrefs.SetInt(_savedLevelPrefes, 0);
-            _levelNumber = 0;
+            ResetLevelsToZero();
             return false;
         }
+    }
+
+    public void ResetLevelsToZero()
+    {
+        PlayerPrefs.SetInt(_savedLevelPrefes, 0);
+        _levelNumber = 0;
     }
 
     public int GetLevelNumber()
@@ -49,13 +79,25 @@ public class CoreGameFlow
         return _levelNumber;
     }
 
+    #region level creations
+    /// <summary>
+    /// Inorder to create a level:
+    /// </summary>
+    /// <returns></returns>
     private LevelInstructions CreateLevel()
     {
+        //a new ball is created
+        //it has the minimum size of 1
+        //has a position
+        //has a color
+        //has a moving direction( 0 - means it will only go up and down)
+        //positive number will drive it right and negative number to the left
         BallData ballData1 = new BallData(1, new Vector2(-1, 2), Color.red, 0);
 
 
         LevelInstructions levelInstructions = new LevelInstructions();
 
+        //add it to level instructions
         levelInstructions.ballsData.Add(ballData1);
 
         return levelInstructions;
@@ -77,7 +119,7 @@ public class CoreGameFlow
 
     private LevelInstructions CreateLevel2()
     {
-        BallData ballData1 = new BallData(2, new Vector2(-1, 2),Color.red, 1);
+        BallData ballData1 = new BallData(2, new Vector2(0, 2),Color.red, 1);
 
         BallData ballData2 = new BallData(1, new Vector2(-4, 2), Color.green, -1);
 
@@ -109,4 +151,16 @@ public class CoreGameFlow
         return levelInstructions;
     }
 
+    private LevelInstructions CreateLevel5()
+    {
+        BallData ballData = new BallData(4, new Vector2(3, 3), Color.magenta, 1);
+        BallData ballData1 = new BallData(4, new Vector2(0, 3), Color.magenta, -1);
+
+        LevelInstructions levelInstructions = new LevelInstructions();
+        levelInstructions.ballsData.Add(ballData);
+        levelInstructions.ballsData.Add(ballData1);
+
+        return levelInstructions;
+    }
+    #endregion
 }

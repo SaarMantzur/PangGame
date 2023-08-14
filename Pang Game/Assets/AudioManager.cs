@@ -11,8 +11,8 @@ public class AudioManager : MonoBehaviour
 
     private void Awake()
     {
-        EventsManager.FireEvent.AddListener(_fireAudioSource.Play);
-        EventsManager.StartGameEvent.AddListener((level)=>_openGameAudioSource.Play());
+        EventsManager.ProjectileSentEvent.AddListener(_fireAudioSource.Play);
+        EventsManager.StartGameEvent.AddListener(_openGameAudioSource.Play);
         EventsManager.SplitEvent.AddListener((ball)=>_splitAudioSource.Play());
         EventsManager.EndGameEvent.AddListener(_lostAudioSource.Play);
     }

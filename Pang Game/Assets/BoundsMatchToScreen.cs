@@ -10,6 +10,7 @@ using UnityEngine.UI;
 /// </summary>
 public class BoundsMatchToScreen : MonoBehaviour
 {
+    #region serielized fields
     [SerializeField] private BoxCollider2D _roofColliderTransform;
     [SerializeField] private BoxCollider2D _floorColliderTransform;
     [SerializeField] private BoxCollider2D _rightWallColliderTransform;
@@ -19,6 +20,7 @@ public class BoundsMatchToScreen : MonoBehaviour
     [SerializeField] private RectTransform _floorUI;
     [SerializeField] private RectTransform _rightWallUI;
     [SerializeField] private RectTransform _leftWallUI;
+    #endregion
 
     private Camera _mainCamera;
 
@@ -33,8 +35,8 @@ public class BoundsMatchToScreen : MonoBehaviour
     
     /// <summary>
     /// Using the rectTransfor coordinates in relations to camera 
-    /// to determine the correct position for the collider and place it as 
-    /// needed.
+    /// to determine the correct position for the collider and
+    /// place it as needed.
     /// </summary>
     /// <param name="rectTransform"></param>
     /// <param name="boxCollider2D"></param>

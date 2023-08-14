@@ -1,11 +1,14 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using static DataStructures;
 
+/// <summary>
+/// Manages the visual aspects and behavior of a game level's view.
+/// </summary>
 public class ViewLevelManager : MonoBehaviour
 {
-
+    #region serielized fields
     [SerializeField] private BallView _originalBallView;
     [SerializeField] private Canvas _canvas;
     [SerializeField] private PlayerMovement _player;
@@ -14,8 +17,12 @@ public class ViewLevelManager : MonoBehaviour
     [SerializeField] private ProjectileMovement _originalProjectileResource;
     [SerializeField] private Transform _projectileStartPoint;
     [SerializeField] private CageInfoManager _cageManagerInfo;
+    [SerializeField] private Button _backToMenuButton;
+
+    #endregion
 
     private ProjectileMovement _projectileMovement;
+    private int _levelNumber;
 
     private List<BallView> _createdBallView = new List<BallView>();
 
@@ -35,11 +42,34 @@ public class ViewLevelManager : MonoBehaviour
 
         EventsManager.ProjectileDestroyedEvent.AddListener(() => { _isProjectileActive = false; });
         EventsManager.FireEvent.AddListener(InitializeProjectile);
-        EventsManager.StartGameEvent.AddListener((i)=> _cageManagerInfo.SetData(i));
         EventsManager.BallHitRoofEvent.AddListener(DestroyBall);
+
+        _backToMenuButton.onClick.AddListener(()=> { EventsManager.ShowGameMenuEvent.Invoke();ClearLevel();});
+
+        //call the player movement by events recived from the UI
+        EventsManager.MoveLeftEvent.AddListener(_player.MoveLeft);
+        EventsManager.MoveRightEvent.AddListener(_player.MoveRight);
+        EventsManager.FireEvent.AddListener(_player.Fire);
+        EventsManager.MoveIdleEvent.AddListener(_player.CommitIdle);
+
 
     }
 
+
+    private void Start()
+    {
+        _cageManagerInfo.SetData(_levelNumber);
+    }
+
+    public void SetData(int levelNumber)
+    {
+        _levelNumber = levelNumber;
+    }
+
+    /// <summary>
+    /// Split a ball into 2 balls
+    /// </summary>
+    /// <param name="ballView"></param>
     private void Split(BallView ballView)
     {
         if (ballView.GetSize() > 1)
@@ -67,6 +97,10 @@ public class ViewLevelManager : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// removes ball from list and delete its GameObject
+    /// </summary>
+    /// <param name="ballView"></param>
     private void DestroyBall(BallView ballView)
     {
         if(ballView != null)
@@ -76,7 +110,11 @@ public class ViewLevelManager : MonoBehaviour
         }
     }
 
-    public void CreateLevelByLevelData(DataStructures.LevelInstructions levelInstructions)
+    /// <summary>
+    /// Create the level by the data from LevelInstructions
+    /// </summary>
+    /// <param name="levelInstructions"></param>
+    public void CreateLevelByLevelData(LevelInstructions levelInstructions)
     {
         foreach (var ballData in levelInstructions.ballsData)
         {
@@ -86,6 +124,12 @@ public class ViewLevelManager : MonoBehaviour
             _background.texture = levelInstructions.BackgroundImage;
     }
 
+
+    /// <summary>
+    /// Create a new ball based on the data from ball data
+    /// </summary>
+    /// <param name="ballData">the data used to describe the ball</param>
+    /// <param name="isSplitted">true if the it is required to create a new ball beacuase of a split</param>
     private void CreateNewBall(DataStructures.BallData ballData, bool isSplitted)
     {
         BallView ballView = Instantiate(_originalBallView);
@@ -95,6 +139,10 @@ public class ViewLevelManager : MonoBehaviour
             ballView.SetColor(ballData.BallColor);
             ballView.SetSize(ballData.BallSize);
             ballView.transform.position = ballData.BallLocation;
+
+            //In case the ball was created because of a split,
+            //it is usefull if the ball would "jump" a little 
+            //bit up and not just fall to the ground
             if(isSplitted)
             {
                 StartCoroutine(ballView.Jump());
@@ -103,6 +151,9 @@ public class ViewLevelManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Initialize a new projectile object
+    /// </summary>
     private void InitializeProjectile()
     {
         if (!_isProjectileActive)
@@ -110,9 +161,13 @@ public class ViewLevelManager : MonoBehaviour
             _isProjectileActive = true;
             _projectileMovement = Instantiate(_originalProjectileResource);
             _projectileMovement.transform.position = _projectileStartPoint.position;
+            EventsManager.ProjectileSentEvent.Invoke();
         }
     }
 
+    /// <summary>
+    /// Removes all elements from the game and returns player to its original position
+    /// </summary>
     public void ClearLevel()
     {
         if (_createdBallView.Count > 0)
@@ -130,6 +185,6 @@ public class ViewLevelManager : MonoBehaviour
 
         _createdBallView.Clear();
         _player.CommitIdle();
-        _player.transform.localPosition = Vector2.zero;
+        _player.RestoreToOriginalPosition();
     }
 }

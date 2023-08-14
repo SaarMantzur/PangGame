@@ -4,21 +4,30 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
+
+/// <summary>
+/// This class represents the menu abilities
+/// </summary>
 public class GameMenuManager : MonoBehaviour
 {
-
+    #region Menu Items
     //The StartGame Button which will be responsible for starting the game
-    [SerializeField] private Button StartGameButton;
+    [SerializeField] private Button _startGameButton;
 
     //Quit Game button will be responsible for quiting the game.
-    [SerializeField] private Button QuitGameButton;
+    [SerializeField] private Button _quitGameButton;
+
+    //Restart levels Buttton
+    [SerializeField] private Button _restartLevelButton;
 
     //The prefab of the game menu GameObject
-    [SerializeField] private Image BackgroundImage;
+    [SerializeField] private Image _backgroundImage;
 
     //The prefab of the game menu GameObject
-    [SerializeField] private GameObject ButtonsPanel;
+    [SerializeField] private GameObject _buttonsPanel;
+    #endregion
 
+    //the current level number
     private int _currentLevel;
 
     //check if GameMenu is visible or not, to avoid unnecassery calls.
@@ -27,16 +36,13 @@ public class GameMenuManager : MonoBehaviour
     private void Awake()
     {
         //Attach Quit button to its purpose.
-        QuitGameButton.onClick.AddListener(Application.Quit);
+        _quitGameButton.onClick.AddListener(Application.Quit);
 
         //Attach StartGame button to its purpose.
-        StartGameButton.onClick.AddListener(() =>
-        {
-            EventsManager.StartGameEvent.Invoke(_currentLevel);
-        });
+        _startGameButton.onClick.AddListener(() => EventsManager.StartGameEvent.Invoke());
 
-        EventsManager.StartGameEvent.AddListener((i) => HideShowMenuEvent(false));
-        EventsManager.ShowGameMenuEvent.AddListener(() => HideShowMenuEvent(true));
+        //Attach _restartLevelButton to its purpose.
+        _restartLevelButton.onClick.AddListener(EventsManager.RestartAllLevels.Invoke);
     }
 
     public void SetCurrentLevel(int currentLevel)
@@ -47,14 +53,14 @@ public class GameMenuManager : MonoBehaviour
     /// <summary>
     /// Disables or enabels the GameMenu
     /// </summary>
-    private void HideShowMenuEvent(bool show)
+    public void HideShowMenuEvent(bool show)
     {
         if (IsVisible != show)
         {
-            if (ButtonsPanel != null && BackgroundImage != null)
+            if (_buttonsPanel != null && _backgroundImage != null)
             {
-                ButtonsPanel.SetActive(show);
-                BackgroundImage.enabled = show;
+                _buttonsPanel.SetActive(show);
+                _backgroundImage.enabled = show;
                 IsVisible = show;
             }
             else

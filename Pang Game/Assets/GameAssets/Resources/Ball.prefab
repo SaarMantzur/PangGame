@@ -106,7 +106,7 @@ Rigidbody2D:
   m_Material: {fileID: 6200000, guid: 6334e4272a557e14abaa86d2967d852c, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!58 &7012524061824624381
 CircleCollider2D:
@@ -138,6 +138,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _spriteRenderer: {fileID: 7012524061824624383}
   _rigidbody2: {fileID: 7012524061824624376}
-  _moveSpeed: 2
   _size: 0
   _accelarator: 0

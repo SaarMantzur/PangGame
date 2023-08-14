@@ -14,7 +14,7 @@ public class GameOverScreenManager : MonoBehaviour
     {
         if (_restartLevelButton != null)
         {
-            _restartLevelButton.onClick.AddListener(() => EventsManager.StartGameOnDefaultLevelEvent.Invoke());
+            _restartLevelButton.onClick.AddListener(EventsManager.StartGameEvent.Invoke);
         }
 
         if (_backToMenuButton != null)
